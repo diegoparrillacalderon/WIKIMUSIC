@@ -1,0 +1,30 @@
+{% extends wikimusic_base_html %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+
+<h1 style="margin-bottom: 30px; text-align: center;">Create Account</h1>
+
+{% if errorMsg %}
+    <div class="alert alert-danger" role="alert">
+    {{ errorMsg }} Please, try again
+    </div>
+{% endif %}
+
+<form class="form-signin" action="{{ request.get_full_path }}" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body">
+            <div style="text-align: center;">
+                {{ form | crispy }}
+            </div>
+            <a class="card-link" href="{% url 'wikimusic-welcome' %}">Home</a>
+            <a class="card-link" href="{% url 'wikimusic-login' %}">Log in</a>
+            <button type="submit" class="btn btn-primary float-end" style="margin-left:180px;">Create account</button>
+        </div>
+    </div>        
+</form>
+{% endblock %}

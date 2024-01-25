@@ -1,0 +1,86 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+<h1 style="margin-bottom: 30px;"> Registration of a new artist.</h1>
+{% if errorMsg %}
+<div class="alert alert-danger" role="alert">
+    {{errorMsg}}. Please, try again
+</div>
+{% endif %}
+<form action="{% url 'wikimusic-r-artist'%}" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="container" style="margin-left: 20px;">
+        <div class="row" >
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.firstname.errors }}
+                    <label class="form-label" for="{{ form.firstname.id_for_label }}">Firstname:</label>
+                    {{ form.firstname }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.surname.errors }}
+                    <label class="form-label" for="{{ form.surname.id_for_label }}">Surname:</label>
+                    {{ form.surname }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.gender.errors }}
+                    <label class="form-label" for="{{ form.gender.id_for_label }}">Gender:</label>
+                    {{ form.gender }}
+                </div>                            
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.born.errors }}
+                    <label class="form-label" for="{{ form.born.id_for_label }}">Date of birth:</label>
+                    {{ form.born }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.death.errors }}
+                    <label class="form-label" for="{{ form.death.id_for_label }}">Date of death:</label>
+                    {{ form.death }}
+                    <div class="form-text">Date of death if dead, if not, do not fill out</div>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.bornCountry.errors }}
+                    <label class="form-label" for="{{ form.bornCountry.id_for_label }}">Country of birth:</label>
+                    {{ form.bornCountry }}
+                </div>                            
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.bornCity.errors }}
+                    <label class="form-label" for="{{ form.bornCity.id_for_label }}">City of birth:</label>
+                    {{ form.bornCity }}
+                </div>                            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

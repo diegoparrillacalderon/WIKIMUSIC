@@ -1,0 +1,62 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+    {% if purpose == 'album' %}
+        <h1 style="margin-bottom: 30px;">Registration of a new album.</h1>
+        {% if list %}
+            <h2>Select the artist of the album</h2>
+            <ul>
+                {% for artist in list %}
+                    <li>
+                        <a href="{% url 'wikimusic-r-album' artist.idArtist %}">{{ artist.firstname }} {{ artist.surname }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                There are no artists that you can add the album to
+            </div>
+        {% endif %}
+    {% elif purpose == 'concert' %}
+        <h1 style="margin-bottom: 30px;">Registration of a new concert.</h1>
+        {% if list %}
+            <h2>Select the artist giving the concert</h2>
+            <ul>
+                {% for artist in list %}
+                    <li>
+                        <a href="{% url 'wikimusic-r-concert' artist.idArtist %}">{{ artist.firstname }} {{ artist.surname }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                There are no artists in the database who can give a concert
+            </div>
+        {% endif %}
+    
+    {% elif purpose == 'list' %}
+        <h1 style="margin-bottom: 30px;">ARTISTS</h1>
+        {% if list %}
+            <ul>
+                {% for artist in list %}
+                    <li>
+                        <a href="{% url 'wikimusic-v-artist' artist.idArtist %}">{{ artist.firstname }} {{ artist.surname }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                There are no artists in the database
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

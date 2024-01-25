@@ -1,0 +1,32 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+<div class="container mt-4">
+    {% if song %}
+        <h1>{{ song.title }}</h1>
+        <p><strong>Album:</strong> <a href="{% url 'wikimusic-v-album' song.albumSong.idAlbum %}">{{ song.albumSong.albumName }}</a></p>
+        <p><strong>Artists:</strong>
+            {% for artist in song.artistsSong.all %}
+                <a href="{% url 'wikimusic-v-artist' artist.idArtist %}">{{ artist.firstname }} {{ artist.surname }}</a>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Length:</strong> {{ song.lengthSong }}</p>
+        <p><strong>Lyrics:</strong> {{ song.lyrics|default:"Not available" }}</p>
+        <p><strong>URL:</strong> {{ song.urlSong }}</p>
+
+
+    {% else %}
+        <p class="alert alert-warning">Song not found</p>
+    {% endif %}
+</div>
+{% endblock %}
+

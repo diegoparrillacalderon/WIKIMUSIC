@@ -1,0 +1,36 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+<div class="container mt-4">
+    {% if artist %}
+        <h1>{{ artist.firstname }} {{ artist.surname }}</h1>
+        <p><strong>Born:</strong> {{ artist.born|date:"F d, Y" }}</p>
+        {% if artist.death %}
+            <p><strong>Death:</strong> {{ artist.death|date:"F d, Y" }}</p>
+        {% endif %}
+        <p><strong>Country:</strong> {{ artist.bornCountry }}</p>
+        <p><strong>City:</strong> {{ artist.bornCity }}</p>
+        <p><strong>Gender:</strong> {{ artist.get_gender_display }}</p>
+
+
+        <h2>Albums:</h2>
+        <ul>
+        {% for album in artist.albums.all %}
+            <li><a href="{% url 'wikimusic-v-album' album.idAlbum %}">{{ album.albumName }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="alert alert-warning">Artist not found</p>
+    {% endif %}
+</div>
+{% endblock %}
+

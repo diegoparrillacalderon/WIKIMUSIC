@@ -1,0 +1,105 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .accordion-button {
+        background-color: #007bff;
+        color: #ffffff;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        text-align: left;
+    }
+
+    .accordion-button:hover {
+        background-color: #0056b3;
+    }
+
+    .accordion-button.collapsed {
+        background-color: #007bff;
+    }
+
+    .accordion-button img {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+</style>
+{% if purpose == 'song' %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <h1 style="margin-bottom: 30px;"> Registration of a new song.</h1>
+    <h2>Select the artist and the album of the song</h2>
+    {% if listAlbum %}
+    <div class="accordion" id="listAlbums">
+        {% for artist in listArtist %}
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="{{artist.idArtist}}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse{{artist.idArtist}}" aria-expanded="false"
+                        aria-controls="collapse{{artist.idArtist}}">
+                        {{artist.firstname}} {{artist.surname}}
+                    </button>
+                </h3>
+                <div id="collapse{{artist.idArtist}}" class="accordion-collapse collapse" aria-labelledby="{{artist.idArtist}}"
+                    data-bs-parent="#listAlbums">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Album Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for album in listAlbum %}
+                                    {% if artist == album.artist %}
+                                        <tr>
+                                            <th scope="row"><a href="{% url 'wikimusic-r-song' idAlbum=album.idAlbum idArtist=artist.idArtist %}"> {{album.albumName}} </a></th>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        There are no albums that you can add the song to
+    </div>
+    {% endif %}
+{% elif purpose == 'list' %}
+    <h1 style="margin-bottom: 30px;">ALBUMS</h1>
+    {% if listAlbum %}
+        <ul>
+            {% for album in listAlbum %}
+                <li>
+                    <a href="{% url 'wikimusic-v-album' album.idAlbum %}">{{ album.albumName }} - {{ album.artist.firstname }} {{ album.artist.surname }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            There are no albums in the database
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

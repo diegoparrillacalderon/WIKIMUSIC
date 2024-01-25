@@ -1,0 +1,29 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<h1 style="margin-bottom: 30px;">SONGS</h1>
+    {% if list %}
+        <ul>
+            {% for song in list %}
+                <li>
+                    <a href="{% url 'wikimusic-v-song' song.idSong %}">
+                        {{ song.title }} - {% for artist in song.artistsSong.all %} {{ artist.firstname }} {{ artist.surname }}, {% endfor %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            There are no songs in the database
+        </div>
+    {% endif %}
+{% endblock %}

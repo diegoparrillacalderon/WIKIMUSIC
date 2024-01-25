@@ -1,0 +1,27 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<h1 style="margin-bottom: 30px;">CONCERTS</h1>
+    {% if list %}
+        <ul>
+            {% for concert in list %}
+                <li>
+                    <a href="{% url 'wikimusic-v-concert' concert.idConcert %}">{{ concert.concertName }} - {{ concert.artistConcert.firstname }} {{ concert.artistConcert.surname }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            There are no concerts in the database
+        </div>
+    {% endif %}
+{% endblock %}

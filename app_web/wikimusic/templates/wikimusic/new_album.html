@@ -1,0 +1,73 @@
+{% extends wikimusic_base_html %}
+{% block content %}
+<style>
+    #content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+<h1 style="margin-bottom: 30px;"> Registration of a new album.</h1>
+{% if errorMsg %}
+<div class="alert alert-danger" role="alert">
+    {{errorMsg}}. Please, try again
+</div>
+{% endif %}
+
+<form action="{% url 'wikimusic-r-album' artist.idArtist %}" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="container" style="margin-left: 20px;">
+        <div class="row" >
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.albumName.errors }}
+                    <label class="form-label" for="{{ form.albumName.id_for_label }}">Album name:</label>
+                    {{ form.albumName }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.release.errors }}
+                    <label class="form-label" for="{{ form.release.id_for_label }}">Release:</label>
+                    {{ form.release }}
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.lengthAlbum.errors }}
+                    <label class="form-label" for="{{ form.lengthAlbum.id_for_label }}">Length of album:</label>
+                    {{ form.lengthAlbum }}
+                    <div class="form-text">Use mm:ss format</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.numSongs.errors }}
+                    <label class="form-label" for="{{ form.numSongs.id_for_label }}">Number of songs on the album:</label>
+                    {{ form.numSongs }}
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.urlAlbum.errors }}
+                    <label class="form-label" for="{{ form.urlAlbum.id_for_label }}">URL of the album:</label>
+                    {{ form.urlAlbum }}
+                </div>                            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
