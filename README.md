@@ -16,7 +16,7 @@ To run Wikimusic locally, follow these steps:
    cd wikimusic
    
 OR
-   ** Download the project as a .zip file, unzip the folder, and navigate to the directory where you downloaded it (...\...\app_web>) **
+   **Download the project as a .zip file, unzip the folder, and navigate to the directory where you downloaded it (...\...\app_web>)**
 
 2. **Create a Virtual Environment:**
    
